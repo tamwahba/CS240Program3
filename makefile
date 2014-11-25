@@ -5,8 +5,11 @@ OBJ_FILES = \
   City.o \
   main.o
   
+CXX = g++
+CXXFLAGS = -std=c++11
+  
 fly:	$(OBJ_FILES)
-	g++ -std=c++11 -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ_FILES) -o $@
 	
 Date.o:	Date.h Date.cpp
 Time.o:	main.cpp
