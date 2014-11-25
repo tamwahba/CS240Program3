@@ -6,15 +6,15 @@ Date::Date(int day, int month, int year) {
 	this->year = year;
 }
 
-int Date::day() {
+int Date::getDay() {
 	return day;
 }
 
-int Date::month() {
+int Date::getMonth() {
 	return month;
 }
 
-int Date::year() {
+int Date::getYear() {
 	return year;
 }
 

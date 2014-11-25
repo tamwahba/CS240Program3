@@ -1,14 +1,17 @@
 #ifndef DATE
 #define DATE
 
+#include <ostream>
+using namespace std;
+
 class Date
 {
 public:
 	Date(int, int, int);
 	
-	int day();
-	int month();
-	int year();
+	int getDay();
+	int getMonth();
+	int getYear();
 	
 	Date operator+(const Date&) const;
 	bool operator>(const Date&) const;
