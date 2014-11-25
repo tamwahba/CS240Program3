@@ -18,7 +18,7 @@ int Date::getYear() {
 	return year;
 }
 
-Date Date::operator+(const Date& rhs) {
+Date Date::operator+(const Date& rhs) const {
 	//assumes all months have 30 days;
 	int newDay = (day + rhs.day) % 30;
 	int newMonth = month + ((day + rhs.day) / 30) % 12;
@@ -26,7 +26,7 @@ Date Date::operator+(const Date& rhs) {
 	return Date(newDay, newMonth, newYear);
 }
 
-bool Date::operator>(const Date& rhs) {
+bool Date::operator>(const Date& rhs) const {
 	if (year > rhs.year)
 		return true;
 	if (month > rhs.month && year == rhs.year)
@@ -36,7 +36,7 @@ bool Date::operator>(const Date& rhs) {
 	return false;
 }
 
-bool Date::operator<(const Date& rhs) {
+bool Date::operator<(const Date& rhs) const {
 	if (year < rhs.year)
 		return true;
 	if (month < rhs.month && year == rhs.year)
@@ -46,7 +46,7 @@ bool Date::operator<(const Date& rhs) {
 	return false;
 }
 
-bool Date::operator==(const Date& rhs) {
+bool Date::operator==(const Date& rhs) const {
 	if (day == rhs.day && month == rhs.month && year == rhs.year)
 		return true;
 	return false;
