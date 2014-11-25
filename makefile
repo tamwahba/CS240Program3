@@ -16,3 +16,6 @@ Time.o:	main.cpp
 Flight.o:	Flight.h Flight.cpp
 City.o:	City.h City.cpp
 main.o:	main.cpp
+	
+clean:
+	rm -rf $(OBJ_FILES) fly
