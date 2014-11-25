@@ -12,7 +12,7 @@ fly:	$(OBJ_FILES)
 	$(CXX) $(CXXFLAGS) $(OBJ_FILES) -o $@
 	
 Date.o:	Date.h Date.cpp
-Time.o:	main.cpp
+Time.o:	Time.cpp
 Flight.o:	Flight.h Flight.cpp
 City.o:	City.h City.cpp
 main.o:	main.cpp
