@@ -4,6 +4,14 @@ Flight::Flight() {
 	cost = 0;
 }
 
+Flight::Flight(int c, Time dp, Time arr, City* orig, City* dest) {
+	cost = c;
+	depart = dp;
+	duration = ar - dp;
+	origin = orig;
+	destination = dest;
+}
+
 int Flight::getCost() {
 	return cost;
 }

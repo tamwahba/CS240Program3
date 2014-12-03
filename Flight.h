@@ -14,6 +14,7 @@ class Flight
 {
 	public:
 		Flight();
+		Flight(int, Time, Time, City*, City*);
 		int getCost();
 		Time getDeparture();
 		Time getDuration();
