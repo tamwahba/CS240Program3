@@ -7,7 +7,7 @@ Flight::Flight() {
 Flight::Flight(int c, Time dp, Time arr, City* orig, City* dest) {
 	cost = c;
 	depart = dp;
-	duration = ar - dp;
+	duration = arr - dp;
 	origin = orig;
 	destination = dest;
 }
