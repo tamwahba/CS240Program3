@@ -9,10 +9,10 @@ CXX = g++
 CXXFLAGS = -std=c++11
 
 fly:	$(OBJ_FILES) main.o
-	$(CXX) $(CXXFLAGS) $(OBJ_FILES) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ_FILES) main.o -o $@
 	
 test:	$(OBJ_FILES) test.o
-	$(CXX) $(CXXFLAGS) $(OBJ_FILES) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ_FILES) test.o -o $@
 
 Date.o:	Date.h Date.cpp
 Time.o:	Time.h Time.cpp
@@ -23,4 +23,4 @@ main.o:	main.cpp
 test.o:	test.cpp
 
 clean:
-	rm -rf $(OBJ_FILES) fly test
+	rm -rf *.o fly test

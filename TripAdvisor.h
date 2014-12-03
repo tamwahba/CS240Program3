@@ -17,7 +17,7 @@ class TripAdvisor
 		// creates new city and adds it to list of citys if new, 
 		//  then adds flight to the list of outbound flights
 		//  from departure city.
-		void addFlight(sting);
+		void addFlight(string);
 		// return ordered list of flights. take in origin name, destination
 		list<Flight> getMeThere(string, string);
 		list<Flight> fewestHops(string, string);
