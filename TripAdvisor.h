@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include <sstream>
 using namespace std;
 
 #include "Flight.h"
@@ -26,7 +27,6 @@ class TripAdvisor
 
 	private:
 		list<City*> cities;
-
 	
 };
 
