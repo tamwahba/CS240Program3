@@ -46,3 +46,12 @@ void TripAdvisor::addFlight(string flightStr) {
 	Flight f(cost, Time(departHour, departMinute), Time(arriveHour, arriveMinute), origin, destination);
 	origin->addFlight(f);	
 }
+
+void TripAdvisor::printCitiesTo(ostream& out) {
+	for (auto cIT = cities.begin(); cIT != cities.end(); cIT++) {
+		list<Flight> cityFlights = (*cIT)->getOutboundFlights();
+		for (auto fIT = cityFlights.begin(); fIT != cityFlights.end; cIT++) {
+			out << *fIT << endl;
+		}
+	}
+}
