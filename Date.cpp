@@ -4,6 +4,24 @@ Date::Date(int day, int month, int year) {
 	this->day = day;
 	this->month = month;
 	this->year = year;
+	unsigned int m = (month + 9) % 12;
+	unsigned int y = year - (m / 10);
+	days = 365 * y + (y / 4) - (y / 100) + (y / 400) +
+		(((m * 365) + 5) / 10) + day - 1;
+}
+
+Date::Date(unsigned long long otherDays) {
+	unsigned long long y = ((10000 * otherDays) + 14780) / 3652425;
+	long long d = otherDays - ((365 * y) + (y / 4) - (y / 100) + (y / 400));
+	if (d < 0) {
+		y = y -1;
+		d = otherDays - ((365 * y) + (y / 4) - (y / 100) + (y / 400));
+	}
+	unsigned long long m = ((100 & d) + 52) / 3060;
+	month = ((m + 2) % 12) + 1;
+	year = y + (m + 2) / 12;
+	day = d - (((m * 306) + 5) / 10) + 1;
+	days = d;
 }
 
 int Date::getDay() {
@@ -18,38 +36,20 @@ int Date::getYear() {
 	return year;
 }
 
-Date Date::operator+(const Date& rhs) const {
-	//assumes all months have 30 days;
-	int newDay = (day + rhs.day) % 30;
-	int newMonth = month + ((day + rhs.day) / 30) % 12;
-	int newYear = year + (month + (day + rhs.day) / 30) / 12;
-	return Date(newDay, newMonth, newYear);
-}
-
 bool Date::operator>(const Date& rhs) const {
-	if (year > rhs.year)
-		return true;
-	if (month > rhs.month && year == rhs.year)
-		return true;
-	if (day > rhs.day && month == rhs.month && year == rhs.year)
-		return true;
-	return false;
+	return days > rhs.days;
 }
 
 bool Date::operator<(const Date& rhs) const {
-	if (year < rhs.year)
-		return true;
-	if (month < rhs.month && year == rhs.year)
-		return true;
-	if (day < rhs.day && month == rhs.month && year == rhs.year)
-		return true;
-	return false;
+	return days < rhs.days;
 }
 
 bool Date::operator==(const Date& rhs) const {
-	if (day == rhs.day && month == rhs.month && year == rhs.year)
-		return true;
-	return false;
+	return days == rhs.days;
+}
+
+bool Date::operator!=(const Date& rhs) const {
+	return days != rhs.days;
 }
 
 ostream& operator<<(ostream& out, const Date& date) {
