@@ -4,6 +4,10 @@ City::City() {
 	
 }
 
+City::City(string n) {
+	name = n;
+}
+
 string City::getName() {
 	return name;
 }

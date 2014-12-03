@@ -13,6 +13,7 @@ class City
 {
 	public:
 		City();
+		City(string);
 		string getName();
 		list<Flight> getOutboundFlights();
 		
