@@ -21,7 +21,7 @@ void TripAdvisor::addFlight(string flightStr) {
 	City* origin;
 	City* destination;
 	// find departure and origin city in cities
-	for (auto it = cities.begin(); it != cities.end(); it++) {
+	for (list<City*>::iterator it = cities.begin(); it != cities.end(); it++) {
 		if ((*it)->getName() == originName) {
 			origin = *it;
 		}
@@ -48,10 +48,10 @@ void TripAdvisor::addFlight(string flightStr) {
 }
 
 void TripAdvisor::printCitiesTo(ostream& out) {
-	for (auto cIT = cities.begin(); cIT != cities.end(); cIT++) {
+	for (list<City*>::iterator cIT = cities.begin(); cIT != cities.end(); cIT++) {
 		list<Flight> cityFlights = (*cIT)->getOutboundFlights();
-		for (auto fIT = cityFlights.begin(); fIT != cityFlights.end; cIT++) {
-			out << *fIT << endl;
-		}
+        for (list<Flight>::iterator fIT = cityFlights.begin(); fIT != cityFlights.end(); fIT++) {
+            out << *fIT << endl;
+        }
 	}
 }
