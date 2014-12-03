@@ -23,3 +23,13 @@ Time Flight::getArrival() {
 City* Flight::getDestination() {
 	return destination;
 }
+
+City* Flight::getOrigin() {
+	return origin;
+}
+
+ostream& operator<<(ostream& out, const Flight& flight) {
+	out << flight.origin->name << ' ' << flight.origin->name << ' ' << flight.depart << ' ' 
+		<< flight.depart + flight.duration << " $" << flight.cost << endl;
+	return out;
+}

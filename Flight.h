@@ -17,6 +17,7 @@ class Flight
 		Time getDuration();
 		Time getArrival();
 		City* getDestination(); // ALLOWS CHANGES TO CITY FROM ANYWHERE
+		City* getOrigin();
 		
 		friend ostream& operator<<(ostream&, const Flight&);
 
@@ -24,6 +25,7 @@ class Flight
 		int cost;
 		Time depart;
 		Time duration;
+		City* origin;
 		City* destination;
 	
 };
