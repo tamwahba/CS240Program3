@@ -12,6 +12,13 @@ class Flight
 {
 	public:
 		Flight();
+		int getCost();
+		Time getDeparture();
+		Time getDuration();
+		Time getArrival();
+		City* getDestination(); // ALLOWS CHANGES TO CITY FROM ANYWHERE
+		
+		friend ostream& operator<<(ostream&, const Flight&);
 
 	private:
 		int cost;
