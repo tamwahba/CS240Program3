@@ -9,9 +9,9 @@ string City::getName() {
 }
 
 list<Flight> City::getOutboundFlights() {
-	return outbound
+	return outbound;
 }
 
 void City::addFlight(Flight flight) {
-	outbound.push(flight);
+	outbound.push_back(flight);
 }

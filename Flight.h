@@ -4,6 +4,8 @@
 #include <string>
 using namespace std;
 
+#include "Time.h"
+
 class Flight;
 
 #include "City.h"

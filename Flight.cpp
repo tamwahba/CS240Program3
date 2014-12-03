@@ -29,7 +29,7 @@ City* Flight::getOrigin() {
 }
 
 ostream& operator<<(ostream& out, const Flight& flight) {
-	out << flight.origin->name << ' ' << flight.origin->name << ' ' << flight.depart << ' ' 
+	out << flight.origin->getName() << ' ' << flight.origin->getName() << ' ' << flight.depart << ' ' 
 		<< flight.depart + flight.duration << " $" << flight.cost << endl;
 	return out;
 }
