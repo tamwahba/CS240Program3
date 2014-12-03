@@ -21,11 +21,11 @@ void TripAdvisor::addFlight(string flightStr) {
 	City* origin;
 	City* destination;
 	// find departure and origin city in cities
-	for (auto it = cities.begin(); *it != cities.end(); it++) {
-		if (*it->getName() == originName) {
+	for (auto it = cities.begin(); it != cities.end(); it++) {
+		if ((*it)->getName() == originName) {
 			origin = *it;
 		}
-		if (*it->getName() == destinationName) {
+		if ((*it)->getName() == destinationName) {
 			destination = *it;
 		}
 		// stop looping if both found
