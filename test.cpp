@@ -1,9 +1,11 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
 #include "Time.h"
 #include "Date.h"
+#include "TripAdvisor.h"
 
 void TimeTest() {
 	cout << "TIME TEST" << endl;
@@ -39,9 +41,26 @@ void DateTest() {
 	cout << "END DATE" << endl;
 }
 
+void TripAdvisorTest() {
+    cout << "TRIPADVISOR TEST" << endl;
+    TripAdvisor ta;
+    ifstream fs;
+    fs.open("testDDFS.txt");
+    string flightStr;
+    while (fs.good()) {
+        getline(fs, flightStr, '\n');
+        if (flightStr != "") {
+            ta.addFlight(flightStr);
+        }
+    }
+    ta.printCitiesTo(cout);
+    cout << "END TRIPADVISOR" << endl;
+}
+
 int main(int argc, char const *argv[])
 {	
 	TimeTest();
 	DateTest();
+    TripAdvisorTest();
     return 0;
 }

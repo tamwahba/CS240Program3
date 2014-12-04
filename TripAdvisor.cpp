@@ -1,11 +1,13 @@
 #include "TripAdvisor.h"
 
+#include <iostream>
+
 TripAdvisor::TripAdvisor() {
 	
 }
 
 void TripAdvisor::addFlight(string flightStr) {
-	string originName, destinationName;
+	string originName, destinationName, departT, arriveT;
 	int departHour, departMinute, arriveHour, arriveMinute, cost;
 	stringstream ss(flightStr);
 	ss >> originName;
@@ -13,25 +15,34 @@ void TripAdvisor::addFlight(string flightStr) {
 	ss >> departHour;
 	ss.ignore(1, ':');
 	ss >> departMinute;
+    ss >> departT;
 	ss >> arriveHour;
 	ss.ignore(1, ':');
 	ss >> arriveMinute;
+    ss >> arriveT;
 	ss.ignore(2, '$');
 	ss >> cost;
-	City* origin;
-	City* destination;
-	// find departure and origin city in cities
-	for (list<City*>::iterator it = cities.begin(); it != cities.end(); it++) {
-		if ((*it)->getName() == originName) {
-			origin = *it;
-		}
-		if ((*it)->getName() == destinationName) {
-			destination = *it;
-		}
-		// stop looping if both found
-		if (origin != nullptr && destination != nullptr)
-			break;
-	}
+	City* origin = nullptr;
+	City* destination = nullptr;
+    if (departT == "pm")
+        departHour += 12;
+    if (arriveT == "pm")
+        arriveHour += 12;
+    // find departure and origin city in cities
+    if (!cities.empty()) {
+        for (list<City*>::iterator it = cities.begin(); it != cities.end(); it++) {
+		    if ((*it)->getName() == originName) {
+		    	origin = *it;
+	    	}
+    		if ((*it)->getName() == destinationName) {
+			    destination = *it;
+		    }
+		    // stop looping if both found
+		    if (origin != nullptr && destination != nullptr) {
+                break;
+            }
+    	}
+    }
 	// add new city if it's not in the list
 	if (origin == nullptr) {
 		origin = new City(originName);
@@ -39,10 +50,10 @@ void TripAdvisor::addFlight(string flightStr) {
 	}
 	if (destination == nullptr) {
 		destination = new City(destinationName);
-		cities.push_back(origin);
-	}
-	
-	// create the flight
+		cities.push_back(destination);
+    }
+
+    // create the flight
 	Flight f(cost, Time(departHour, departMinute), Time(arriveHour, arriveMinute), origin, destination);
 	origin->addFlight(f);	
 }
