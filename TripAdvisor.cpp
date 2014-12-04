@@ -1,7 +1,5 @@
 #include "TripAdvisor.h"
 
-#include <iostream>
-
 TripAdvisor::TripAdvisor() {
 	
 }
@@ -52,7 +50,6 @@ void TripAdvisor::addFlight(string flightStr) {
 		destination = new City(destinationName);
 		cities.push_back(destination);
     }
-
     // create the flight
 	Flight f(cost, Time(departHour, departMinute), Time(arriveHour, arriveMinute), origin, destination);
 	origin->addFlight(f);	
