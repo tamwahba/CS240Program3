@@ -41,7 +41,7 @@ bool Time::isNull () const {
 Time Time::operator+ (const Time& rhs) const {
 	int newHour = hour +rhs.hour + ((minute + rhs.minute) / 60);
 	int newMinute = (minute + rhs.minute) % 60;
-	cout << "newHour " << newHour << "newMinute " << newMinute << endl;
+	// cout << "newHour " << newHour << "newMinute " << newMinute << endl;
 	
 	if (newHour >= 24 || newHour < 0 || newMinute <0 || newMinute >= 60) {
 		return Time();
