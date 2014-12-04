@@ -22,11 +22,12 @@ void TimeTest() {
 }
 
 void DateTest() {
-	cout << "DATE TEST" << endl
+	cout << "DATE TEST" << endl;
 	Date d1(5, 28, 1994);
 	Date d2(5, 28, 2014);
 	Date d3(5, 28, 2014);
 	Date d4(1, 1, 2001);
+    Date d5(2, 1, 2001);
 	
 	cout << d1 << " <  " << d2 << ": " << (d1 < d2) << " " << '1' << endl;
     cout << d1 << " >  " << d2 << ": " << (d1 > d2) << " " << '0' << endl;
@@ -34,6 +35,7 @@ void DateTest() {
 	cout << d1 << " != " << d2 << ": " << (d1 != d2) << " " << '1' << endl;
     cout << d2 << " == " << d3 << ": " << (d2 == d3) << " " << '1' << endl;
 	cout << d3 << " <  " << d4 << ": " << (d3 < d4) << " " << '0' << endl;
+    cout << d5 << " >  " << d4 << ": " << (d5 > d4) << " " << '1' << endl;
 	cout << "END DATE" << endl;
 }
 
