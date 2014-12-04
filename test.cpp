@@ -25,17 +25,17 @@ void DateTest() {
 	Date d3(5, 28, 2014);
 	Date d4(1, 1, 2001);
 	
-	cout << d1 << " < " << d2 << ": " << d1 < d2 << '\t' << '1' << endl;
-	cout << d1 << " > " << d2 << ": " << d1 > d2 << '\t' << '0' << endl;
-	cout << d1 << " == " << d2 << ": " << d1 == d2 << '\t' << '0' << endl;
-	cout << d1 << " != " << d2 << ": " << d1 != d2 << '\t' << '1' << endl;
-	cout << d2 << " == " << d3 << ": " << d2 == d3 << '\t' << '1' << endl;
-	cout << d3 << " < " << d4 << ": " << d3 < d4 << '\t' << '0' << endl;
+	cout << d1 << " <  " << d2 << ": " << (d1 < d2) << " " << '1' << endl;
+    cout << d1 << " >  " << d2 << ": " << (d1 > d2) << " " << '0' << endl;
+	cout << d1 << " == " << d2 << ": " << (d1 == d2) << " " << '0' << endl;
+	cout << d1 << " != " << d2 << ": " << (d1 != d2) << " " << '1' << endl;
+    cout << d2 << " == " << d3 << ": " << (d2 == d3) << " " << '1' << endl;
+	cout << d3 << " <  " << d4 << ": " << (d3 < d4) << " " << '0' << endl;
 }
 
 int main(int argc, char const *argv[])
 {	
 	TimeTest();
 	DateTest();
-	return 0;
+    return 0;
 }

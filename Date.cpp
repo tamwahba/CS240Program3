@@ -53,6 +53,6 @@ bool Date::operator!=(const Date& rhs) const {
 }
 
 ostream& operator<<(ostream& out, const Date& date) {
-	out << date.day << '/' << date.month << '/' << date.year << endl;
+	out << date.day << '/' << date.month << '/' << date.year;
 	return out;
 }
