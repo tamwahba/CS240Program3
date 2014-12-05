@@ -60,15 +60,15 @@ void TripAdvisorTest() {
 int main(int argc, char const *argv[])
 {
 	string selection;
-	TripAdvisor t();
+	TripAdvisor t;
 	if (argc == 2) {
 		ifstream in (argv[1]);
-		string p1Name;
-		if (in.is_open)
+		string line;
+		if (in.is_open() )
 		{
 			while (!in.eof() )
 			{
-				getline (in, p1Name);
+				getline (in, line);
 				t.addFlight(line);
 			}
 		}
@@ -76,6 +76,7 @@ int main(int argc, char const *argv[])
 		{
 			cout << "Error opening file " <<endl;
 		}
+	}
 		while (true)
 		{
 			string c; //char c?
@@ -87,21 +88,22 @@ int main(int argc, char const *argv[])
 			cout << "or press e to end" << endl;
 			cin >> c;
 			
-			if (c== "J" || c== "j")
+			if (c== "J" || c== "j") {}
 				//t.JustGetMeThere();
-				if (c == "F" || c== "f")
+			if (c == "F" || c== "f") {}
 					//t.FewestHops();
-					if (c == "S" || c== "s")
+			if (c == "S" || c== "s") {}
 						//t.ShortestTrip();
-						if (c == "C" || c== "c")
+			if (c == "C" || c== "c") {}
 							//t.Cheapest()
-							if (c == "e") {break};
-							else {
-								cout << "Error please enter J, F,C, or S" << endl;
-							}
+			if (c == "e") {break;}
+			else {
+				cout << "Error please enter J, F,C, or S" << endl;
 			}
+		}
 	TimeTest();
 	DateTest();
     TripAdvisorTest();
     return 0;
 }
+
