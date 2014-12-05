@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #include "Time.h"
@@ -55,7 +56,7 @@ int main(int argc, char const *argv[])
 			}
 		}
 	} else {
-		cout << "Cannot run program without DDFS file as argument."
+		cout << "Cannot run program without DDFS file as argument." << endl;
 	}
 	return 0;
 }
