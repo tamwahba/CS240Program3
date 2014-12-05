@@ -7,7 +7,8 @@ using namespace std;
 class Date
 {
 public:
-	Date(int, int, int);
+    Date();
+    Date(int, int, int);
 	Date(unsigned long long);
 	
 	int getDay();
