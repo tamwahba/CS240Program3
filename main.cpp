@@ -8,6 +8,39 @@ using namespace std;
 #include "Flight.h"
 #include "TripAdvisor.h"
 
+struct searchParams {
+    City* departCity;
+    City* arriveCity;
+    Date departDate;
+    Time departTime;
+    Date arriveDate;
+    Time arriveTime;
+};
+
+// returns data for search converted from input strings to proper types
+// error checking occurs here, future functions could assume all data 
+// returned to be valid. if user chooses to quit, returns null.
+searchParams getConstraints(TripAdvisor& t) {
+    string departName, arriveName, departDate, departTime;
+    string returnDate, returnTime;
+    searchParams p;
+    cout << "Enter departure city: ";
+    getline(cin ,departName);
+    // convert to city* by searching in t
+    // then p.departCity = result. or keep looping
+    cout << "Enter arrival city: ";
+    getline(cin, arriveName);
+    cout << "Enter departure date (mm/dd/yyy): ";
+    getline(cin, departDate);
+    cout << "Enter departure time (hh:mm): ";
+    getline(cin, departTime);
+    cout << "Enter return date (mm/dd/yyy): ";
+    getline(cin, returnDate);
+    cout << "Enter return time (hh:mm): ";
+    getline(cin, returnTime);
+    return p;
+}
+
 int main(int argc, char const *argv[])
 {
 	string selection;
