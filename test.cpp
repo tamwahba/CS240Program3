@@ -88,15 +88,23 @@ int main(int argc, char const *argv[])
 			cout << "or press e to end" << endl;
 			cin >> c;
 			
-			if (c== "J" || c== "j") {}
+			if (c== "J" || c== "j") {
+                cout << "pressed J" << endl;
+            }
 				//t.JustGetMeThere();
-			if (c == "F" || c== "f") {}
+            else if (c == "F" || c== "f") {
+                cout << "selected F" << endl;
+            }
 					//t.FewestHops();
-			if (c == "S" || c== "s") {}
+            else if (c == "S" || c== "s") {
+                cout << "selected S" << endl;
+            }
 						//t.ShortestTrip();
-			if (c == "C" || c== "c") {}
+            else if (c == "C" || c== "c") {
+                cout << "selected C" << endl;
+            }
 							//t.Cheapest()
-			if (c == "e") {break;}
+            else if (c == "e" ) {break;}
 			else {
 				cout << "Error please enter J, F,C, or S" << endl;
 			}
