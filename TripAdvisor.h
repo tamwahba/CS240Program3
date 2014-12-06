@@ -11,8 +11,16 @@ using namespace std;
 #include "Time.h"
 #include "Date.h"
 
-class TripAdvisor
-{
+struct searchParams {
+    City* departCity;
+    City* arriveCity;
+    Date departDate;
+    Time departTime;
+    Date arriveDate;
+    Time arriveTime;
+};
+
+class TripAdvisor {
 	public:
 		TripAdvisor();
 		
@@ -22,9 +30,9 @@ class TripAdvisor
 		void addFlight(string);
 		
 		// return ordered list of flights. take in origin name, destination
-		list<Flight> getMeThere(string, string);
-		list<Flight> fewestHops(string, string);
-		list<Flight> shortestTrip(string, string);
+		list<Flight> getMeThere(searchParams);
+		list<Flight> fewestHops(searchParams);
+		list<Flight> shortestTrip(searchParams);
 		
 		void printCitiesTo(ostream&);
 
