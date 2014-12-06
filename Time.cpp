@@ -125,3 +125,16 @@ ostream& operator<<(ostream& out, const Time& time) {
 	
 	return out;
 }
+
+istream& operator>>(istream& in, Time& time) {
+    int hour, min;
+    in >> hour;
+    in.ignore(1, ':');
+    in >> min;
+    if (hour >= 0 && hour < 24 && min >= 0 && min < 60) {
+        time = Time(hour, min);
+    } else {
+        in.setstate(ios::failbit);
+    }
+    return in;
+}

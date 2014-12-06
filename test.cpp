@@ -16,10 +16,23 @@ void TimeTest() {
 	Time fifth = first + third;
 	Time sixth = first - third;
 	
-	cout << first << second << third << endl;
+    stringstream ss1("12:12");
+    stringstream ss2("qw21");
+
+    Time t7;
+    Time t8;
+
+    ss1 >> t7;
+    ss2 >> t8;
+	
+    cout << first << second << third << endl;
 	cout <<"12:30pm + 10:12pm " << fourth << endl;
 	cout << "12:30 + 3:48am " << fifth << endl;
 	cout << "12:30 - 3:48am " << sixth << endl;
+    
+    cout << t7 << endl;
+    cout << t8 << endl;
+
 	cout << "END TIME" << endl;
 }
 

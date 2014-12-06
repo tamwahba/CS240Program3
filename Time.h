@@ -1,7 +1,7 @@
 #ifndef TIME
 #define TIME
 
-#include <ostream>
+#include <iostream>
 using namespace std;
 
 class Time
@@ -25,7 +25,8 @@ public:
 	Time &operator= (const Time &right);
 	
 	friend ostream& operator<< (ostream&, const Time&);
-	
+    friend istream& operator>> (istream&, Time&);
+
 private:
 	int hour;
 	int minute;
