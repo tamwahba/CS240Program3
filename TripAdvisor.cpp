@@ -63,3 +63,19 @@ void TripAdvisor::printCitiesTo(ostream& out) {
         }
 	}
 }
+
+list<Flight> TripAdvisor::getMeThere(searchParams) {
+    list<Flight> flights;
+    cout << "getMeThere called" << endl;
+    return flights;
+}
+
+list<Flight> TripAdvisor::fewestHops(searchParams) {
+    list<Flight> flights;
+    cout << "fewestHops called" << endl;
+    return flights;
+}
+
+list<Flight> TripAdvisor::shortestTrip(searchParams) {
+    cout << "shortestTrip called" << endl;
+}
