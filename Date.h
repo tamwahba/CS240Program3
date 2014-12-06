@@ -1,7 +1,8 @@
 #ifndef DATE
 #define DATE
 
-#include <ostream>
+#include <iostream>
+#include <iomanip>
 using namespace std;
 
 class Date
@@ -19,9 +20,11 @@ public:
 	bool operator<(const Date&) const;
 	bool operator==(const Date&) const;
 	bool operator!=(const Date&) const;
-	
+    bool operator!() const;
+
 	friend ostream& operator<<(ostream&, const Date&);
-	
+    friend istream& operator>>(istream&, Date&); 
+
 private:
 	int day;
 	int month;

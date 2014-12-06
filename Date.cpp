@@ -45,18 +45,45 @@ bool Date::operator>(const Date& rhs) const {
 }
 
 bool Date::operator<(const Date& rhs) const {
-	return days < rhs.days;
-}
+        return days < rhs.days;
+    }
 
-bool Date::operator==(const Date& rhs) const {
-	return days == rhs.days;
-}
+    bool Date::operator==(const Date& rhs) const {
+        return days == rhs.days;
+    }
 
-bool Date::operator!=(const Date& rhs) const {
-	return days != rhs.days;
-}
+    bool Date::operator!=(const Date& rhs) const {
+        return days != rhs.days;
+    }
 
-ostream& operator<<(ostream& out, const Date& date) {
-	out << date.day << '/' << date.month << '/' << date.year;
-	return out;
+    bool Date::operator!() const {
+        return day <= 0 || month <= 0 || year <= 0;
+    }
+
+    ostream& operator<<(ostream& out, const Date& date) {
+        out << setfill('0');
+        out << setw(2) << date.day << '/';
+        out << setw(2) << date.month << '/';
+        out << setw(4) << date.year;
+        out << setfill(' ');
+        return out;
+    }
+
+    istream& operator>>(istream& in, Date& date) {
+        date = Date(0,0,0);
+        int month, day, year;
+        char separator;
+        in >> month;
+        in >> separator;
+        in >> day;
+        in >> separator;
+        in >> year;
+        if (month > 0 && month <=12) {
+        if (day > 0 && day <= 31) {
+            if (year > 0) {
+                date = Date(day, month, year);
+            }
+        }
+    }
+    return in;
 }

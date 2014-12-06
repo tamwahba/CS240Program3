@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-
+#include <sstream>
 using namespace std;
 
 #include "Time.h"
@@ -38,7 +38,20 @@ void DateTest() {
     cout << d2 << " == " << d3 << ": " << (d2 == d3) << " " << '1' << endl;
 	cout << d3 << " <  " << d4 << ": " << (d3 < d4) << " " << '0' << endl;
     cout << d5 << " >  " << d4 << ": " << (d5 > d4) << " " << '1' << endl;
-	cout << "END DATE" << endl;
+	
+    Date d6;
+    Date d7;
+
+    stringstream ss6("ewr23oij");
+    stringstream ss7("12/12/2014");
+
+    ss6 >> d6;
+    ss7 >> d7;
+
+    cout << d6 << " !(" << d6 << "): " << !d6 << " " << '1' << endl;
+    cout << d7 << " !(" << d7 << "): " << !d7 << " " << '0' << endl;
+    
+    cout << "END DATE" << endl;
 }
 
 void TripAdvisorTest() {
