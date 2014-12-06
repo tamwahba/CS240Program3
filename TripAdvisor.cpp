@@ -8,7 +8,7 @@ void TripAdvisor::addFlight(string flightStr) {
 	string originName, destinationName, departT, arriveT;
 	int departHour, departMinute, arriveHour, arriveMinute, cost;
 	stringstream ss(flightStr);
-	ss >> originName;
+    ss >> originName;
 	ss >> destinationName;
 	ss >> departHour;
 	ss.ignore(1, ':');
@@ -20,7 +20,7 @@ void TripAdvisor::addFlight(string flightStr) {
     ss >> arriveT;
 	ss.ignore(2, '$');
 	ss >> cost;
-	City* origin = nullptr;
+    City* origin = nullptr;
 	City* destination = nullptr;
     if (departT == "pm")
         departHour += 12;
@@ -53,6 +53,19 @@ void TripAdvisor::addFlight(string flightStr) {
     // create the flight
 	Flight f(cost, Time(departHour, departMinute), Time(arriveHour, arriveMinute), origin, destination);
 	origin->addFlight(f);	
+}
+
+City* TripAdvisor::getCity(string name) {
+    City* ret = nullptr;
+    if (!cities.empty()) {
+        for (list<City*>::iterator it = cities.begin(); it != cities.end(); it++) {
+            if ((*it)->getName() == name) {
+                ret = *it;
+                break;
+            }
+        }
+    }
+    return ret;
 }
 
 void TripAdvisor::printCitiesTo(ostream& out) {

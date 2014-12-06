@@ -28,7 +28,9 @@ class TripAdvisor {
 		//  then adds flight to the list of outbound flights
 		//  from departure city.
 		void addFlight(string);
-		
+
+        City* getCity(string);
+    
 		// return ordered list of flights. take in origin name, destination
 		list<Flight> getMeThere(searchParams);
 		list<Flight> fewestHops(searchParams);
