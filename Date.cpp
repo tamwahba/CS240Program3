@@ -69,19 +69,21 @@ bool Date::operator<(const Date& rhs) const {
         return out;
     }
 
-    istream& operator>>(istream& in, Date& date) {
-        date = Date(0,0,0);
-        int month, day, year;
-        char separator;
-        in >> month;
-        in >> separator;
-        in >> day;
-        in >> separator;
-        in >> year;
-        if (month > 0 && month <=12) {
+istream& operator>>(istream& in, Date& date) {
+    date = Date(0,0,0);
+    int month, day, year;
+    char separator;
+    in >> month;
+    in >> separator;
+    in >> day;
+    in >> separator;
+    in >> year;
+    in.setstate(ios::failbit);
+    if (month > 0 && month <=12) {
         if (day > 0 && day <= 31) {
             if (year > 0) {
                 date = Date(day, month, year);
+                in.clear();
             }
         }
     }
