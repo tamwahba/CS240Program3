@@ -15,10 +15,10 @@ class Flight
 	public:
 		Flight();
 		Flight(int, Time, Time, City*, City*);
-		int getCost();
-		Time getDeparture();
-		Time getDuration();
-		Time getArrival();
+		int getCost() const;
+		Time getDeparture() const;
+		Time getDuration() const;
+		Time getArrival() const;
 		City* getDestination(); // ALLOWS CHANGES TO CITY FROM ANYWHERE
 		City* getOrigin();
 		

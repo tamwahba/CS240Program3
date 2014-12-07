@@ -12,19 +12,19 @@ Flight::Flight(int c, Time dp, Time arr, City* orig, City* dest) {
 	destination = dest;
 }
 
-int Flight::getCost() {
+int Flight::getCost() const {
 	return cost;
 }
 
-Time Flight::getDeparture() {
+Time Flight::getDeparture() const {
 	return depart;
 }
 
-Time Flight::getDuration() {
-	return duration;
+Time Flight::getDuration() const {
+    return duration;
 }
 
-Time Flight::getArrival() {
+Time Flight::getArrival() const {
 	return depart + duration;
 }
 
