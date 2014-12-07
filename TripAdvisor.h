@@ -33,7 +33,7 @@ class TripAdvisor {
 
         City* getCity(string);
     
-		// return ordered list of flights. take in origin name, destination
+		// return ordered list of flights. if no path found, list is empty
 		list<Flight> getMeThere(searchParams);
 		list<Flight> fewestHops(searchParams);
 		list<Flight> shortestTrip(searchParams);
