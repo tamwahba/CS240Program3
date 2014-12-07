@@ -2,6 +2,8 @@
 #define TRIPADVISOR
 
 #include <list>
+#include <queue>
+#include <vector>
 #include <string>
 #include <sstream>
 using namespace std;

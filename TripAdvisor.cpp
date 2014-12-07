@@ -83,9 +83,39 @@ list<Flight> TripAdvisor::getMeThere(searchParams) {
     return flights;
 }
 
-list<Flight> TripAdvisor::fewestHops(searchParams) {
+list<Flight> TripAdvisor::fewestHops(searchParams p) {
     list<Flight> flights;
-    cout << "fewestHops called" << endl;
+    cout << endl << "fewestHops called with parameters:" << endl;
+    cout << "depart: " << p.departCity->getName() << endl;
+    cout << "return: " << p.arriveCity->getName() << endl;
+    cout << endl;
+    queue<City*> q; // to visit next
+    vector<City*> v; // visited
+    v.push_back(p.departCity);
+    q.push(p.departCity);
+    while (!q.empty()) {
+        City* c = q.front();
+        q.pop();
+        cout << "visited node: " << c->getName() << endl;
+        if (c == p.arriveCity)
+            break;
+        list<Flight> fs = c->getOutboundFlights();
+        for (list<Flight>::iterator fIT = fs.begin(); fIT != fs.end(); fIT++) {
+            bool visitedFIT = false;
+            for (int i = 0; i < v.size(); i++) {
+                if (v[i] == fIT->getDestination())
+                    visitedFIT = true;
+            }
+            if (!visitedFIT) {
+                v.push_back(fIT->getDestination());
+                flights.push_back(*fIT);
+                q.push(fIT->getDestination());
+            }
+        }
+    }
+    // v has all the cities from departure to arrival (or all reachable cities
+    //   for now)
+    // Does not take into account maintaining time (for now ...).
     return flights;
 }
 

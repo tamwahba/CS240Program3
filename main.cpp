@@ -30,6 +30,7 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
         cout << "you entered: " << departName << endl; // temporary for testing
         departCity = t.getCity(departName);
         if (departCity != nullptr) {
+            p.departCity = departCity;
             break;
         } else {
             if (cin.eof()) {
@@ -50,6 +51,7 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
         cout << "you entered: " << arriveName << endl;
         returnCity = t.getCity(arriveName);
         if (returnCity != nullptr) {
+            p.arriveCity = returnCity;
             break;
         } else {
             if (cin.eof())
@@ -63,6 +65,8 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
     while (cin.good()) {
         cout << "Enter departure date (mm/dd/yyyy): ";
         if (cin >> departDate) {
+            p.departDate = departDate;
+            cout << "you entered: " << departDate << endl;
             break;
         } else {
             if (cin.eof())
@@ -76,6 +80,8 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
     while (cin.good()) {
         cout << "Enter departure time (hh:mm): ";
         if( cin >> departTime) {
+            p.departTime = departTime;
+            cout << "you entered: " << departTime << endl;
             break;
         } else {
             if (cin.eof())
@@ -90,6 +96,8 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
     while (cin.good()) {
         cout << "Enter return date (mm/dd/yyyy): ";
         if (cin >> returnDate) {
+            p.arriveDate = returnDate;
+            cout << "you entered: " << returnDate << endl;
             break;
         } else {
             if (cin.eof())
@@ -103,6 +111,8 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
     while (cin.good()) {
         cout << "Enter return time (hh:mm): ";
         if (cin >> returnTime) {
+            p.arriveTime = returnTime;
+            cout << "you entered: " << returnTime << endl;
             break;
         } else {
             if (cin.eof())
@@ -148,26 +158,36 @@ int main(int argc, char const *argv[])
 			cout << "or press E to end" << endl;
 			
             searchParams p;
-
+            list<Flight> itinerary;
 			cin >> c;
             if (c == "J" || c == "j") {
 				cout << "selected J" << endl;
 				if (getConstraints(t, p))
-                    list<Flight> itinerary = t.getMeThere(p);
+                    itinerary = t.getMeThere(p);
 			} else if (c == "F" || c == "f") {
 				cout << "selected F" << endl;
-				//t.fewestHops(" ", " ");
+				if(getConstraints(t, p)) {
+                    cout << endl << "calling fewest hops with params:" << endl;
+                    cout << "depart: " << p.departCity->getName() << endl;
+                    cout << "arrive: " << p.arriveCity->getName() << endl;
+                    itinerary = t.fewestHops(p);
+                }
 			} else if (c == "S" || c == "s") {
 				cout << "selected S" << endl;
 				//t.shortestTrip(" ", " ");
 			} else if (c == "C" || c == "c") {
+                cout << "selected C" << endl;
                 //t.cheapest(" ", " ");
 			} else if (c == "E" ) {
+                cout << "selected E" << endl;
 				break;
 			} else {
 				cout << "Error please enter J, F,C, or S." << endl;
 			}
             cin.clear();
+            cout << "Your itinerary is:" << endl;
+            for (list<Flight>::iterator fIT = itinerary.begin(); fIT != itinerary.end(); fIT++)
+                cout << *fIT << endl;
             //cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
 	} else {
