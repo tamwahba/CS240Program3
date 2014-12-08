@@ -2,126 +2,102 @@
 #include <iostream>
 
 
-Time::Time()
-{
-	hour = minute = 0;
+Time::Time() {
+	minutes = -1;
 }
 
-// Assumes param h 0-23 hours, m 0-59 minutes
-Time::Time (int h, int m)
-{
-	hour = h;
-	minute = m;
+Time::Time (int h, int m) {
+    if (h < 24 && m < 60)
+        minutes = (h * 60) + m;
 }
+
 Time::Time (int m) {
-	hour = m / 60;
-	minute = m % 60;
-}
-Time:: Time(const Time & aTime)
-{
-	hour = minute = 0;
-	//Copying via assignment operator
-	*this = aTime;
+    if ((m < (23 * 60) + 59) && m >= 0)
+        minutes = m;
 }
 
-int Time::getMinute(){
-	return minute;
+Time::Time(const Time & aTime) {
+	minutes = aTime.minutes;
 }
-int Time::getHour() {
-	return hour;
+
+int Time::getMinute() const {
+	return minutes % 60;
 }
-int Time::getAsMinutes() {
-	return (hour *60) + minute;
+
+int Time::getHour() const {
+    return (((minutes / 60) % 12) == 0 ? 12 : (minutes / 60) % 12);
 }
+
+int Time::getAsMinutes() const {
+	return minutes;
+}
+
 bool Time::isNull () const {
-	return ( (hour == 0 ) && (minute == 0) );
+	return !(*this);
 }
 
-// Return int instead of Time class?
-Time Time::operator+ (const Time& rhs) const {
-	int newHour = hour +rhs.hour + ((minute + rhs.minute) / 60);
-	int newMinute = (minute + rhs.minute) % 60;
-	// cout << "newHour " << newHour << "newMinute " << newMinute << endl;
-	
-	if (newHour >= 24 || newHour < 0 || newMinute <0 || newMinute >= 60) {
-		return Time();
-	}
-	else {
-		return Time (newHour, newMinute);
-	}
+Time Time::operator+(const Time& rhs) const {
+    return Time(minutes + rhs.minutes);
 }
-Time Time::operator- (const Time & rhs) const {
-	
-	
-	int newHour = hour -rhs.hour - ((minute + rhs.minute) / 60);
-	int newMinute = (minute - rhs.minute);
-	if ( (minute - rhs.minute) < 0) {
-		newMinute = 60+ newMinute;
-	}
-	if (newHour >= 24 || newHour < 0 || newMinute <0 || newMinute >= 60) {
-		return Time();
-	}
-	else {
-		return Time (newHour, newMinute);
-	}
-}
-// Checks out of range hours (above 23:59 time)
-// like if two times + =>24 it returns a null time obj
 
+Time Time::operator-(const Time & rhs) const {	
+    return Time(minutes - rhs.minutes);
+}
 
 bool Time::operator>(const Time& rhs) const {
-	if (hour > rhs.hour)
-		return true;
-	if (minute > rhs.minute && hour == rhs.hour)
-		return true;
-	return false;
+	return minutes > rhs.minutes;
 }
 
 bool Time::operator<(const Time& rhs) const {
-	if (hour < rhs.hour)
-		return true;
-	if (minute < rhs.minute && hour == rhs.hour)
-		return true;
-	return false;
+	return minutes < rhs.minutes;
 }
 
 bool Time::operator==(const Time& rhs) const {
-	if (hour == rhs.hour && minute == rhs.minute)
-		return true;
-	return false;
+	return minutes == rhs.minutes;
 }
-Time &Time::operator=(const Time& right) {
-	//cout << "Called assignment operator. Time class" << endl;
-	
-	hour = right.hour;
-	minute = right.minute;
-	
-	return (*this);
+
+bool Time::operator>=(const Time& rhs) const {
+    return minutes >= rhs.minutes;
+}
+
+bool Time::operator<=(const Time& rhs) const {
+    return minutes <= rhs.minutes;
+}
+
+Time& Time::operator+=(const Time& rhs) {
+    minutes += rhs.minutes;
+    if (minutes >= (24 * 60))
+        minutes = -1;
+    return *this;
+}
+
+Time::operator bool() const {
+    return minutes >= 0;
+}
+
+bool Time::operator!() const {
+    return minutes < 0;
 }
 
 ostream& operator<<(ostream& out, const Time& time) {
-	Time copy = time;
-	int twelveHRS, min;
-	bool am = true;
-	if (time.isNull() ) {
-		out << time.hour << ':' << time.minute << endl;
-	}
-	else {
-		if (copy.hour == 0) { twelveHRS = 12; }
-		else if (copy.hour < 12 && copy.hour > 0) { twelveHRS = copy.hour; }
-		else if (copy.hour == 12) { twelveHRS = 12; am = false; }
-		else if (copy.hour > 12 && copy.hour < 24) { twelveHRS = copy.hour %12; am = false; }
-		if ( (copy.minute > 0) && (copy.minute < 60) ) { min = copy.minute; }
-		else { out << "Error time out of bounds " << endl; }
-		
-		if (am) {
-			out << twelveHRS << ':' <<min << " am ";
-		}
-		else {
-			out << twelveHRS << ':'<< min <<" pm ";
-		}
-	}
-	
-	
+    out << time.getHour() << ':' << time.getMinute();
+    out << (time < Time(11,59) ? "am" : "pm");
 	return out;
+}
+
+istream& operator>>(istream& in, Time& time) {
+    int hour, min;
+    string pm;
+    in >> hour;
+    in.ignore(1, ':');
+    in >> min;
+    if (in.good())
+        in >> pm;
+    if ((pm == "pm" || pm == "pm") && hour > 12)
+        hour += 12;
+    time = Time(hour, min);
+    if (!time) {
+        in.setstate(ios::failbit);
+    }
+    return in;
 }

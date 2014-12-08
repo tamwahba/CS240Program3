@@ -2,8 +2,11 @@
 #define TRIPADVISOR
 
 #include <list>
+#include <queue>
+#include <vector>
 #include <string>
 #include <sstream>
+#include <limits>
 using namespace std;
 
 #include "Flight.h"
@@ -11,8 +14,16 @@ using namespace std;
 #include "Time.h"
 #include "Date.h"
 
-class TripAdvisor
-{
+struct searchParams {
+    City* departCity;
+    City* arriveCity;
+    Date departDate;
+    Time departTime;
+    Date arriveDate;
+    Time arriveTime;
+};
+
+class TripAdvisor {
 	public:
 		TripAdvisor();
 		
@@ -20,11 +31,13 @@ class TripAdvisor
 		//  then adds flight to the list of outbound flights
 		//  from departure city.
 		void addFlight(string);
-		
-		// return ordered list of flights. take in origin name, destination
-		list<Flight> getMeThere(string, string);
-		list<Flight> fewestHops(string, string);
-		list<Flight> shortestTrip(string, string);
+
+        City* getCity(string);
+    
+		// return ordered list of flights. if no path found, list is empty
+		list<Flight> getMeThere(searchParams);
+		list<Flight> fewestHops(searchParams);
+		list<Flight> shortestTrip(searchParams);
 		
 		void printCitiesTo(ostream&);
 
@@ -32,5 +45,7 @@ class TripAdvisor
 		list<City*> cities;
 
 };
+
+pair<int, int> extractMin(vector<pair<int, int>*>&, bool&);
 
 #endif

@@ -8,7 +8,7 @@ void TripAdvisor::addFlight(string flightStr) {
 	string originName, destinationName, departT, arriveT;
 	int departHour, departMinute, arriveHour, arriveMinute, cost;
 	stringstream ss(flightStr);
-	ss >> originName;
+    ss >> originName;
 	ss >> destinationName;
 	ss >> departHour;
 	ss.ignore(1, ':');
@@ -20,7 +20,7 @@ void TripAdvisor::addFlight(string flightStr) {
     ss >> arriveT;
 	ss.ignore(2, '$');
 	ss >> cost;
-	City* origin = nullptr;
+    City* origin = nullptr;
 	City* destination = nullptr;
     if (departT == "pm")
         departHour += 12;
@@ -55,6 +55,19 @@ void TripAdvisor::addFlight(string flightStr) {
 	origin->addFlight(f);	
 }
 
+City* TripAdvisor::getCity(string name) {
+    City* ret = nullptr;
+    if (!cities.empty()) {
+        for (list<City*>::iterator it = cities.begin(); it != cities.end(); it++) {
+            if ((*it)->getName() == name) {
+                ret = *it;
+                break;
+            }
+        }
+    }
+    return ret;
+}
+
 void TripAdvisor::printCitiesTo(ostream& out) {
 	for (list<City*>::iterator cIT = cities.begin(); cIT != cities.end(); cIT++) {
 		list<Flight> cityFlights = (*cIT)->getOutboundFlights();
@@ -62,4 +75,150 @@ void TripAdvisor::printCitiesTo(ostream& out) {
             out << *fIT << endl;
         }
 	}
+}
+
+list<Flight> TripAdvisor::getMeThere(searchParams) {
+    list<Flight> flights;
+    cout << "getMeThere called" << endl;
+    return flights;
+}
+
+list<Flight> TripAdvisor::fewestHops(searchParams p) {
+    list<Flight> flights;
+    Time time = p.departTime;
+    cout << endl << "fewestHops called with parameters:" << endl;
+    cout << "depart: " << p.departCity->getName() << endl;
+    cout << "return: " << p.arriveCity->getName() << endl;
+    cout << endl;
+    queue<City*> q; // to visit next
+    vector<City*> v; // visited
+    v.push_back(p.departCity);
+    q.push(p.departCity);
+    while (!q.empty()) {
+        City* c = q.front();
+        q.pop();
+        cout << "visited node: " << c->getName() << endl;
+        if (c == p.arriveCity)
+            break;
+        list<Flight> fs = c->getOutboundFlights();
+        for (list<Flight>::iterator fIT = fs.begin(); fIT != fs.end(); fIT++) {
+            bool visitedFIT = false;
+            for (int i = 0; i < v.size(); i++) {
+                if (v[i] == fIT->getDestination())
+                    visitedFIT = true;
+            }
+            if (!visitedFIT 
+                    && (time + fIT->getDuration()) 
+                    && (time < fIT->getDeparture())) {
+                v.push_back(fIT->getDestination());
+                flights.push_back(*fIT);
+                cout << "time is: " << time << endl;
+                cout << "adding flight: " << *fIT << endl;
+                time += fIT->getDuration();
+                cout << "new time: " << time << endl;
+                q.push(fIT->getDestination());
+            }
+        }
+    }
+    // empty flights if no path is found
+    if (flights.back().getDestination() != p.arriveCity) {
+        flights.clear();
+    }
+    return flights;
+}
+
+list<Flight> TripAdvisor::shortestTrip(searchParams p) {
+    cout << "shortestTrip called" << endl;
+    vector<City*> v;
+    vector<list<Flight>> flights(cities.size());
+    vector<pair<int, int>*> q(cities.size());
+    vector<City*> c(cities.size()); // completely and utterly redundant. but no choice
+    int i = 0;
+    for (list<City*>::iterator it = cities.begin(); it != cities.end(); it++) {
+        q[i] = new pair<int, int>(i, numeric_limits<int>::max());
+        c[i] = *it;
+        if (*it == p.departCity) {
+            q[i]->second = 0;
+            cout << "setting origin dist to 0" << endl;
+        }
+        i++;
+    }
+    cout << "initializied. q has " << i << " items"  << endl;
+    for (int i = 0; i < q.size(); i++) {
+        cout << "\t<" << q[i]->first << " " << q[i]->second << ">" << endl;
+    }
+    bool empty = false;
+    while (!empty) {
+        cout << "looping" << endl;
+        pair<int, int> current  = extractMin(q, empty);
+        int currentIdx = current.first;
+        int currentDist = current.second;
+        if (c[currentIdx] == p.arriveCity) {
+            cout << "cleaning up" << endl;
+            //cleanup
+            for (int i = 0; i < q.size(); i++) {
+                if (q[i] != nullptr)
+                    delete q[i];
+            }
+            return flights[currentIdx];
+        }
+        list<Flight> neighbors = c[currentIdx]->getOutboundFlights();
+        for (list<Flight>::iterator it = neighbors.begin();
+                it != neighbors.end(); it++) {
+            int layover = 0;
+            if (!flights[currentIdx].empty()) {
+                if (flights[currentIdx].back().getDeparture() < it->getArrival()) {
+                    layover += (24 * 60);
+                }
+                layover += (flights[currentIdx].back().getDeparture() - it->getArrival()).getAsMinutes();
+            }
+            int alt = currentDist + it->getDuration().getAsMinutes() + layover;
+            int neighborIdx = -1;
+            for (int i = 0; i < c.size(); i++) {
+                if (c[i] == it->getDestination()) {
+                    neighborIdx = i;
+                    break;
+                }
+            }
+            int neighborqIdx;
+            for (int i = 0; i < q.size(); i++) {
+                if (neighborIdx != -1 && q[i] != nullptr && q[i]->first == neighborIdx) {
+                    neighborqIdx = i;
+                    break;
+                }
+            }
+            if (neighborqIdx != -1 && q[neighborqIdx] != nullptr && alt < q[neighborqIdx]->second) {
+                q[neighborqIdx]->second = alt;
+                list<Flight> temp = flights[currentIdx];
+                temp.push_back(*it);
+                flights[neighborIdx] = temp;
+            }
+        }
+        cout << "end of loop" << endl;
+    }
+}
+
+
+pair<int, int> extractMin(vector<pair<int, int>*>& v, bool& empty) {
+    cout << "extract min called" << endl;
+    pair<int, int> min(-1, numeric_limits<int>::max());
+    int minIdx = -1;
+    for (int i = 0; i < v.size(); i++) {
+        if (v[i] != nullptr && v[i]->second < min.second){
+            min = *v[i];
+            minIdx = i;
+            cout << "found smaller: <" << min.first << ' ' << min.second << '>' << endl;
+        }
+    }
+    cout << "smallest: <" << min.first << ' ' << min.second << '>' << endl;
+    if (minIdx == -1){
+        empty = true;
+    } else {
+        delete v[minIdx];
+        v[minIdx] = nullptr;
+        if (v[minIdx] == nullptr)
+            cout << "deleted" << endl;
+    }
+    cout << "exiting extract min. empty: " << empty  << endl;
+    return min;
 }

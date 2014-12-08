@@ -1,7 +1,7 @@
 #ifndef TIME
 #define TIME
 
-#include <ostream>
+#include <iostream>
 using namespace std;
 
 class Time
@@ -10,11 +10,11 @@ public:
 	Time ();
 	Time (int, int);
 	Time (int);
-	Time (const Time & aTime);
+	Time (const Time&);
 	
-	int getMinute();
-	int getHour();
-	int getAsMinutes();
+	int getMinute() const;
+	int getHour() const;
+	int getAsMinutes() const;
 	bool isNull() const;
 	
 	Time operator+(const Time&) const;
@@ -22,13 +22,19 @@ public:
 	bool operator>(const Time&) const;
 	bool operator<(const Time&) const;
 	bool operator==(const Time&) const;
-	Time &operator= (const Time &right);
+	bool operator>=(const Time&) const;
+    bool operator<=(const Time&) const;
+    Time& operator+=(const Time&);
+    operator bool() const;
+    bool operator!() const;
+    //Time &operator= (const Time &right);
+
 	
 	friend ostream& operator<< (ostream&, const Time&);
-	
+    friend istream& operator>> (istream&, Time&);
+
 private:
-	int hour;
-	int minute;
+    int minutes;
 	//bool am;
 	
 };

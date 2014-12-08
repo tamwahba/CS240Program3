@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-
+#include <sstream>
 using namespace std;
 
 #include "Time.h"
@@ -16,10 +16,23 @@ void TimeTest() {
 	Time fifth = first + third;
 	Time sixth = first - third;
 	
-	cout << first << second << third << endl;
+    stringstream ss1("12:12");
+    stringstream ss2("qw21");
+
+    Time t7;
+    Time t8;
+
+    ss1 >> t7;
+    ss2 >> t8;
+	
+    cout << first << second << third << endl;
 	cout <<"12:30pm + 10:12pm " << fourth << endl;
 	cout << "12:30 + 3:48am " << fifth << endl;
 	cout << "12:30 - 3:48am " << sixth << endl;
+    
+    cout << t7 << endl;
+    cout << t8 << endl;
+
 	cout << "END TIME" << endl;
 }
 
@@ -38,7 +51,20 @@ void DateTest() {
     cout << d2 << " == " << d3 << ": " << (d2 == d3) << " " << '1' << endl;
 	cout << d3 << " <  " << d4 << ": " << (d3 < d4) << " " << '0' << endl;
     cout << d5 << " >  " << d4 << ": " << (d5 > d4) << " " << '1' << endl;
-	cout << "END DATE" << endl;
+	
+    Date d6;
+    Date d7;
+
+    stringstream ss6("ewr23oij");
+    stringstream ss7("12/12/2014");
+
+    ss6 >> d6;
+    ss7 >> d7;
+
+    cout << d6 << " !(" << d6 << "): " << !d6 << " " << '1' << endl;
+    cout << d7 << " !(" << d7 << "): " << !d7 << " " << '0' << endl;
+    
+    cout << "END DATE" << endl;
 }
 
 void TripAdvisorTest() {

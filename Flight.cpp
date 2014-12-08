@@ -12,19 +12,19 @@ Flight::Flight(int c, Time dp, Time arr, City* orig, City* dest) {
 	destination = dest;
 }
 
-int Flight::getCost() {
+int Flight::getCost() const {
 	return cost;
 }
 
-Time Flight::getDeparture() {
+Time Flight::getDeparture() const {
 	return depart;
 }
 
-Time Flight::getDuration() {
-	return duration;
+Time Flight::getDuration() const {
+    return duration;
 }
 
-Time Flight::getArrival() {
+Time Flight::getArrival() const {
 	return depart + duration;
 }
 
@@ -34,6 +34,11 @@ City* Flight::getDestination() {
 
 City* Flight::getOrigin() {
 	return origin;
+}
+
+bool Flight::operator==(const Flight& rhs) const {
+    return (cost == rhs.cost) && (depart == rhs.depart) && (duration == rhs.duration)
+        && (origin == rhs.origin) && (destination == rhs.destination);
 }
 
 ostream& operator<<(ostream& out, const Flight& flight) {
