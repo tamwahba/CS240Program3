@@ -174,7 +174,9 @@ int main(int argc, char const *argv[])
                 }
 			} else if (c == "S" || c == "s") {
 				cout << "selected S" << endl;
-				//t.shortestTrip(" ", " ");
+                if (getConstraints(t, p)) {
+                    itinerary = t.shortestTrip(p);
+                }
 			} else if (c == "C" || c == "c") {
                 cout << "selected C" << endl;
                 //t.cheapest(" ", " ");

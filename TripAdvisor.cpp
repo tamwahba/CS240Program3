@@ -127,52 +127,98 @@ list<Flight> TripAdvisor::fewestHops(searchParams p) {
     return flights;
 }
 
-list<Flight> TripAdvisor::shortestTrip(searchParams) {
+list<Flight> TripAdvisor::shortestTrip(searchParams p) {
     cout << "shortestTrip called" << endl;
     vector<City*> v;
     vector<list<Flight>> flights(cities.size());
     vector<pair<int, int>*> q(cities.size());
     vector<City*> c(cities.size()); // completely and utterly redundant. but no choice
-    q[0] = new pair<int, int>(0, 0);
-    c[0] = cities.front();
-    int i = 1;
+    int i = 0;
     for (list<City*>::iterator it = cities.begin(); it != cities.end(); it++) {
         q[i] = new pair<int, int>(i, numeric_limits<int>::max());
         c[i] = *it;
+        if (*it == p.departCity) {
+            q[i]->second = 0;
+            cout << "setting origin dist to 0" << endl;
+        }
         i++;
     }
-
+    cout << "initializied. q has " << i << " items"  << endl;
+    for (int i = 0; i < q.size(); i++) {
+        cout << "\t<" << q[i]->first << " " << q[i]->second << ">" << endl;
+    }
     bool empty = false;
     while (!empty) {
+        cout << "looping" << endl;
         pair<int, int> current  = extractMin(q, empty);
         int currentIdx = current.first;
         int currentDist = current.second;
+        if (c[currentIdx] == p.arriveCity) {
+            cout << "cleaning up" << endl;
+            //cleanup
+            for (int i = 0; i < q.size(); i++) {
+                if (q[i] != nullptr)
+                    delete q[i];
+            }
+            return flights[currentIdx];
+        }
         list<Flight> neighbors = c[currentIdx]->getOutboundFlights();
         for (list<Flight>::iterator it = neighbors.begin();
                 it != neighbors.end(); it++) {
-
+            int layover = 0;
+            if (!flights[currentIdx].empty()) {
+                if (flights[currentIdx].back().getDeparture() < it->getArrival()) {
+                    layover += (24 * 60);
+                }
+                layover += (flights[currentIdx].back().getDeparture() - it->getArrival()).getAsMinutes();
+            }
+            int alt = currentDist + it->getDuration().getAsMinutes() + layover;
+            int neighborIdx = -1;
+            for (int i = 0; i < c.size(); i++) {
+                if (c[i] == it->getDestination()) {
+                    neighborIdx = i;
+                    break;
+                }
+            }
+            int neighborqIdx;
+            for (int i = 0; i < q.size(); i++) {
+                if (neighborIdx != -1 && q[i] != nullptr && q[i]->first == neighborIdx) {
+                    neighborqIdx = i;
+                    break;
+                }
+            }
+            if (neighborqIdx != -1 && q[neighborqIdx] != nullptr && alt < q[neighborqIdx]->second) {
+                q[neighborqIdx]->second = alt;
+                list<Flight> temp = flights[currentIdx];
+                temp.push_back(*it);
+                flights[neighborIdx] = temp;
+            }
         }
-    }
-
-    //cleanup
-    for (int i = 0; i < q.size(); i++) {
-        if (q[i] != nullptr)
-            delete q[i];
+        cout << "end of loop" << endl;
     }
 }
 
 
 pair<int, int> extractMin(vector<pair<int, int>*>& v, bool& empty) {
-    pair<int, int> min;
+    cout << "extract min called" << endl;
+    pair<int, int> min(-1, numeric_limits<int>::max());
     int minIdx = -1;
     for (int i = 0; i < v.size(); i++) {
-        if (v[i] != nullptr && min.second < v[i]->second){
+        if (v[i] != nullptr && v[i]->second < min.second){
             min = *v[i];
             minIdx = i;
+            cout << "found smaller: <" << min.first << ' ' << min.second << '>' << endl;
         }
     }
-    delete v[minIdx];
-    if (minIdx = -1)
+    cout << "smallest: <" << min.first << ' ' << min.second << '>' << endl;
+    if (minIdx == -1){
         empty = true;
+    } else {
+        delete v[minIdx];
+        v[minIdx] = nullptr;
+        if (v[minIdx] == nullptr)
+            cout << "deleted" << endl;
+    }
+    cout << "exiting extract min. empty: " << empty  << endl;
     return min;
 }
