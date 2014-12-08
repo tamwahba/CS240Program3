@@ -21,7 +21,8 @@ class Flight
 		Time getArrival() const;
 		City* getDestination(); // ALLOWS CHANGES TO CITY FROM ANYWHERE
 		City* getOrigin();
-		
+	
+        bool operator==(const Flight&) const;    
 		friend ostream& operator<<(ostream&, const Flight&);
 
 	private:
