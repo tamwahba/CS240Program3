@@ -187,7 +187,7 @@ int main(int argc, char const *argv[])
             cin.clear();
             cout << "Your itinerary is:" << endl;
             for (list<Flight>::iterator fIT = itinerary.begin(); fIT != itinerary.end(); fIT++)
-                cout << *fIT << endl;
+                cout << '\t' << *fIT << endl;
             //cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
 	} else {

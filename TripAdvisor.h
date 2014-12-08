@@ -14,6 +14,34 @@ using namespace std;
 #include "Time.h"
 #include "Date.h"
 
+struct compareDuration {
+    bool operator()(list<Flight>*& lhs, list<Flight>*& rhs) {
+        int lhsD = 0;
+        int rhsD = 0;
+        for (list<Flight>::const_iterator it = lhs->begin(); it != lhs->end(); it++) {
+            int layover = 0;
+            if (next(it) != lhs->end()) {
+                if ((next(it))->getDeparture() < it->getArrival()) {
+                    layover += (24 * 60);
+                }
+                layover += ((next(it))->getDeparture() - it->getArrival()).getAsMinutes();
+            }
+            lhsD += it->getDuration().getAsMinutes() + layover;
+        }
+        for (list<Flight>::const_iterator it = rhs->begin(); it != rhs->end(); it++) {
+            int layover = 0;
+            if ((next(it)) != rhs->end()) {
+                if ((next(it))->getDeparture() < it->getArrival()) {
+                    layover += (24 * 60);
+                }
+                layover += (next(it)->getDeparture() - it->getArrival()).getAsMinutes();
+            }
+            rhsD += it->getDuration().getAsMinutes() + layover;
+        }
+        return lhsD > rhsD;
+    }
+};
+
 struct searchParams {
     City* departCity;
     City* arriveCity;
