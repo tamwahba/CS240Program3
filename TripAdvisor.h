@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <limits>
 using namespace std;
 
 #include "Flight.h"
@@ -44,5 +45,7 @@ class TripAdvisor {
 		list<City*> cities;
 
 };
+
+pair<int, int> extractMin(vector<pair<int, int>*>&, bool&);
 
 #endif

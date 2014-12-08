@@ -129,4 +129,50 @@ list<Flight> TripAdvisor::fewestHops(searchParams p) {
 
 list<Flight> TripAdvisor::shortestTrip(searchParams) {
     cout << "shortestTrip called" << endl;
+    vector<City*> v;
+    vector<list<Flight>> flights(cities.size());
+    vector<pair<int, int>*> q(cities.size());
+    vector<City*> c(cities.size()); // completely and utterly redundant. but no choice
+    q[0] = new pair<int, int>(0, 0);
+    c[0] = cities.front();
+    int i = 1;
+    for (list<City*>::iterator it = cities.begin(); it != cities.end(); it++) {
+        q[i] = new pair<int, int>(i, numeric_limits<int>::max());
+        c[i] = *it;
+        i++;
+    }
+    
+    bool empty = false;
+    while (!empty) {
+        pair<int, int> current  = extractMin(q, empty);
+        int currentIdx = current.first;
+        int currentDist = current.second;
+        list<Flight> neighbors = c[currentIdx]->getOutboundFlights();
+        for (list<Flight>::iterator it = neighbors.begin();
+                it != neighbors.end(); it++) {
+            // relaxation step
+        }
+        
+    }
+
+    // cleanup
+    for (int i = 0; i < q.size(); i++) {
+        if (q[i] != nullptr)
+            delete q[i];
+    }
+}
+
+pair<int, int> extractMin(vector<pair<int, int>*>& v, bool& empty) {
+    pair<int, int> min;
+    int minIdx = -1;
+    for (int i = 0; i < v.size(); i++) {
+        if (v[i] != nullptr && min.second < v[i]->second){
+            min = *v[i];
+            minIdx = i;
+        }
+    }
+    delete v[minIdx];
+    if (minIdx = -1)
+        empty = true;
+    return min;
 }
