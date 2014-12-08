@@ -24,3 +24,7 @@ test.o:	test.cpp
 
 clean:
 	rm -rf *.o fly test
+
+tar:
+	tar cvzf Program3.tar.gz TripAdvisor.cpp TripAdvisor.h main.cpp City.h City.cpp Date.cpp Date.h Flight.cpp Flight.h test.cpp Time.h Time.cpp testDDFS.txt README.md makefile
+
