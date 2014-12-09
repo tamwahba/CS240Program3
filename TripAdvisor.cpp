@@ -120,11 +120,19 @@ list<Flight> TripAdvisor::fewestHops(searchParams p) {
             }
         }
     }
+    City* o = flights.back().getArrival();
     // empty flights if no path is found
     if (flights.back().getDestination() != p.arriveCity) {
         flights.clear();
     }
-    return flights;
+    list<Fligh> finalF;
+    for (list<Flight>::iterator = flights.end(); it != flights.begin(); it--) {
+    	if (it->getArrival() == o) {
+    		finalF.push_front(*it);
+    		o = it->getDeparture();
+    	}
+    }
+    return finalF;
 }
 
 list<Flight> TripAdvisor::shortestTrip(searchParams p) {
