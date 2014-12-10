@@ -4,6 +4,12 @@ TripAdvisor::TripAdvisor() {
 	
 }
 
+TripAdvisor::~TripAdvisor() {
+    for (auto it = cities.begin(); it != cities.end(); it++) {
+        delete *it;
+    }
+}
+
 void TripAdvisor::addFlight(string flightStr) {
 	string originName, destinationName, departT, arriveT;
 	int departHour, departMinute, arriveHour, arriveMinute, cost;
