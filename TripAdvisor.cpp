@@ -120,16 +120,16 @@ list<Flight> TripAdvisor::fewestHops(searchParams p) {
             }
         }
     }
-    City* o = flights.back().getArrival();
+    City* o = flights.back().getDestination();
     // empty flights if no path is found
     if (flights.back().getDestination() != p.arriveCity) {
         flights.clear();
     }
-    list<Fligh> finalF;
-    for (list<Flight>::iterator = flights.end(); it != flights.begin(); it--) {
-    	if (it->getArrival() == o) {
+    list<Flight> finalF;
+    for (list<Flight>::iterator it = flights.end(); it != flights.begin(); it--) {
+    	if (it->getDestination() == o) {
     		finalF.push_front(*it);
-    		o = it->getDeparture();
+    		o = it->getOrigin();
     	}
     }
     return finalF;
