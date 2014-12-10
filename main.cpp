@@ -158,7 +158,7 @@ int main(int argc, char const *argv[])
 			cout << "or press E to end" << endl;
 			
             searchParams p;
-            list<Flight> itinerary;
+            list<Flight> itinerary, itineraryB;
 			cin >> c;
             if (c == "J" || c == "j") {
 				// cout << "selected J" << endl;
@@ -171,14 +171,23 @@ int main(int argc, char const *argv[])
                     // cout << "depart: " << p.departCity->getName() << endl;
                     // cout << "arrive: " << p.arriveCity->getName() << endl;
                     itinerary = t.fewestHops(p);
+                    City* tempC = p.departCity;
+                    p.departCity = p.arriveCity;
+                    p.arriveCity = tempC;
+                    itineraryB = t.fewestHops(p);
                 }
 			} else if (c == "S" || c == "s") {
 				// cout << "selected S" << endl;
                 if (getConstraints(t, p)) {
                     itinerary = t.shortestTrip(p);
+                    City* tempC = p.departCity;
+                    p.departCity = p.arriveCity;
+                    p.arriveCity = tempC;
+                    itineraryB = t.shortestTrip(p);
                 }
 			} else if (c == "C" || c == "c") {
                 // cout << "selected C" << endl;
+                cout << "Not implemented!" << endl;
                 //t.cheapest(" ", " ");
 			} else if (c == "E" ) {
                 // cout << "selected E" << endl;
@@ -189,6 +198,8 @@ int main(int argc, char const *argv[])
             cin.clear();
             cout << "Your itinerary is:" << endl;
             for (list<Flight>::iterator fIT = itinerary.begin(); fIT != itinerary.end(); fIT++)
+                cout << *fIT << endl;
+            for (list<Flight>::iterator fIT = itineraryB.begin(); fIT != itineraryB.end(); fIT++)
                 cout << *fIT << endl;
             //cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
