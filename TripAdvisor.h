@@ -27,7 +27,7 @@ struct searchParams {
 class TripAdvisor {
 	public:
 		TripAdvisor();
-		
+        ~TripAdvisor();    
 		// creates new city and adds it to list of citys if new, 
 		//  then adds flight to the list of outbound flights
 		//  from departure city.

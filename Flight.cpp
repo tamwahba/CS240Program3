@@ -47,3 +47,21 @@ ostream& operator<<(ostream& out, const Flight& flight) {
         << " $" << flight.cost;
 	return out;
 }
+
+Time sumDuration(list<Flight>& fls) {
+    // cout << "in sumDuration" << endl;
+    int t = 0;
+    for (list<Flight>::iterator it = fls.begin(); it != fls.end(); it++) {
+        int layover = 0;
+        if (next(it) != fls.end()) {
+            if (it->getDeparture() < next(it)->getArrival() ) {
+                layover = (24 * 60);
+            }
+            layover = (it->getDeparture() - next(it)->getArrival()).getAsMinutes();
+        }
+        t += it->getDuration().getAsMinutes() + layover;
+    }
+    // cout << "returning sumDuration" << endl;
+    return Time(t);
+}
+
