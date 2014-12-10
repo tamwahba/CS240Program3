@@ -242,8 +242,8 @@ pair<int, int> extractMin(vector<pair<int, int>*>& v, bool& empty) {
     } else {
         delete v[minIdx];
         v[minIdx] = nullptr;
-        if (v[minIdx] == nullptr)
-            // cout << "deleted" << endl;
+        // if (v[minIdx] == nullptr)
+        //     cout << "deleted" << endl;
     }
     // cout << "exiting extract min. empty: " << empty  << endl;
     return min;
