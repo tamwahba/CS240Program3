@@ -3,6 +3,7 @@ Boston Philadelphia 1:10pm 2:14pm $139
 Boston Philadelphia 6:44pm 8:02pm $159 
 Philadelphia Boston 9:10am 11:14am $99 
 Philadelphia Boston 6:44pm 8:02pm $99
+Philadelphia Miami 12:02pm 2:02pm $3000
 Philadelphia NewYork 7:07pm 9:10pm $78
 NewYork Boston 7:22pm 8:02pm $99
 Newark Miami 2:20pm 5:35pm $260
@@ -11,7 +12,12 @@ Newark Miami 9:45am 12:55am $260
 Newark Miami 11:12am 2:22pm $270
 Newark Miami 12:02pm 3:33pm $270
 Newark Miami 1:02pm 4:12pm $275
+Newark Boston 4:40am 5:00am $2000
+Newark LosAngeles 1:02pm 4:14pm $120
+Newark Boston 2:20pm 3:14pm $80
+Miami LosAngeles 2:00am 3:30am $4000
 LosAngeles Miami 1:02pm 4:12pm $300
 LosAngeles Miami 1:42pm 4:52pm $300
 LosAngeles Miami 2:20pm 5:20pm $300
 LosAngeles Miami 3:50pm 6:50pm $300
+LosAngeles Newark 4:00am 4:20am $4000
