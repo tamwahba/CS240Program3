@@ -80,8 +80,10 @@ bool Time::operator!() const {
 }
 
 ostream& operator<<(ostream& out, const Time& time) {
-    out << time.getHour() << ':' << time.getMinute();
+    out << setfill('0');
+    out << time.getHour() << ':' << setw(2) << time.getMinute();
     out << (time < Time(11,59) ? "am" : "pm");
+    out << setfill(' ');
 	return out;
 }
 
