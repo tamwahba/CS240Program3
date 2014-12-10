@@ -14,7 +14,7 @@ using namespace std;
 // error checking occurs here, future functions could assume all data 
 // returned to be valid. if user chooses to quit, returns null.
 bool getConstraints(TripAdvisor& t, searchParams& p) {
-    t.printCitiesTo(cout);
+    // t.printCitiesTo(cout);
     string departName, arriveName;
     City* departCity = nullptr;
     City* returnCity = nullptr;
@@ -27,7 +27,7 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
     while (cin.good()) {
         cout << "Enter departure city: ";
         getline(cin, departName);
-        cout << "you entered: " << departName << endl; // temporary for testing
+        // cout << "you entered: " << departName << endl; // temporary for testing
         departCity = t.getCity(departName);
         if (departCity != nullptr) {
             p.departCity = departCity;
@@ -48,7 +48,7 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
     while (cin.good()) {
         cout << "Enter arrival city: ";
         getline(cin, arriveName);
-        cout << "you entered: " << arriveName << endl;
+        // cout << "you entered: " << arriveName << endl;
         returnCity = t.getCity(arriveName);
         if (returnCity != nullptr) {
             p.arriveCity = returnCity;
@@ -66,7 +66,7 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
         cout << "Enter departure date (mm/dd/yyyy): ";
         if (cin >> departDate) {
             p.departDate = departDate;
-            cout << "you entered: " << departDate << endl;
+            // cout << "you entered: " << departDate << endl;
             break;
         } else {
             if (cin.eof())
@@ -81,7 +81,7 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
         cout << "Enter departure time (hh:mm): ";
         if( cin >> departTime) {
             p.departTime = departTime;
-            cout << "you entered: " << departTime << endl;
+            // cout << "you entered: " << departTime << endl;
             break;
         } else {
             if (cin.eof())
@@ -97,7 +97,7 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
         cout << "Enter return date (mm/dd/yyyy): ";
         if (cin >> returnDate) {
             p.arriveDate = returnDate;
-            cout << "you entered: " << returnDate << endl;
+            // cout << "you entered: " << returnDate << endl;
             break;
         } else {
             if (cin.eof())
@@ -112,7 +112,7 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
         cout << "Enter return time (hh:mm): ";
         if (cin >> returnTime) {
             p.arriveTime = returnTime;
-            cout << "you entered: " << returnTime << endl;
+            // cout << "you entered: " << returnTime << endl;
             break;
         } else {
             if (cin.eof())
@@ -161,27 +161,27 @@ int main(int argc, char const *argv[])
             list<Flight> itinerary;
 			cin >> c;
             if (c == "J" || c == "j") {
-				cout << "selected J" << endl;
+				// cout << "selected J" << endl;
 				if (getConstraints(t, p))
                     itinerary = t.getMeThere(p);
 			} else if (c == "F" || c == "f") {
-				cout << "selected F" << endl;
+				// cout << "selected F" << endl;
 				if(getConstraints(t, p)) {
-                    cout << endl << "calling fewest hops with params:" << endl;
-                    cout << "depart: " << p.departCity->getName() << endl;
-                    cout << "arrive: " << p.arriveCity->getName() << endl;
+                    // cout << endl << "calling fewest hops with params:" << endl;
+                    // cout << "depart: " << p.departCity->getName() << endl;
+                    // cout << "arrive: " << p.arriveCity->getName() << endl;
                     itinerary = t.fewestHops(p);
                 }
 			} else if (c == "S" || c == "s") {
-				cout << "selected S" << endl;
+				// cout << "selected S" << endl;
                 if (getConstraints(t, p)) {
                     itinerary = t.shortestTrip(p);
                 }
 			} else if (c == "C" || c == "c") {
-                cout << "selected C" << endl;
+                // cout << "selected C" << endl;
                 //t.cheapest(" ", " ");
 			} else if (c == "E" ) {
-                cout << "selected E" << endl;
+                // cout << "selected E" << endl;
 				break;
 			} else {
 				cout << "Error please enter J, F,C, or S." << endl;

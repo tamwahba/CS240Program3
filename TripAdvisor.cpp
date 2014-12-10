@@ -85,32 +85,32 @@ void TripAdvisor::printCitiesTo(ostream& out) {
 
 list<Flight> TripAdvisor::getMeThere(searchParams p) {
     list<Flight> flights, fls, flsBack;
-    cout << "getMeThere called" << endl;
+    // cout << "getMeThere called" << endl;
     fls = shortestTrip(p);
     if (sumDuration(fls)) {
-        cout << "forward trip valid" << endl;
+        // cout << "forward trip valid" << endl;
         City* temp = p.departCity;
         p.departCity = p.arriveCity;
         p.arriveCity = temp;
         flsBack = shortestTrip(p);
         if(sumDuration(flsBack))
-            cout << "backwards trip valid" << endl;
+            // cout << "backwards trip valid" << endl;
         fls.splice(fls.end(), flsBack);
         if (sumDuration(fls)) {
-            cout << "total trip valid" << endl;
+            // cout << "total trip valid" << endl;
             return fls;
         }
     }
-    cout << "trip too long" << endl;
+    // cout << "trip too long" << endl;
     return flights;
 }
 
 list<Flight> TripAdvisor::fewestHops(searchParams p) {
     list<Flight> flights;
-    cout << endl << "fewestHops called with parameters:" << endl;
-    cout << "depart: " << p.departCity->getName() << endl;
-    cout << "return: " << p.arriveCity->getName() << endl;
-    cout << endl;
+    // cout << endl << "fewestHops called with parameters:" << endl;
+    // cout << "depart: " << p.departCity->getName() << endl;
+    // cout << "return: " << p.arriveCity->getName() << endl;
+    // cout << endl;
     queue<City*> q; // to visit next
     vector<City*> v; // visited
     v.push_back(p.departCity);
@@ -118,7 +118,7 @@ list<Flight> TripAdvisor::fewestHops(searchParams p) {
     while (!q.empty()) {
         City* c = q.front();
         q.pop();
-        cout << "visited node: " << c->getName() << endl;
+        // cout << "visited node: " << c->getName() << endl;
         if (c == p.arriveCity)
             break;
         list<Flight> fs = c->getOutboundFlights();
@@ -131,7 +131,7 @@ list<Flight> TripAdvisor::fewestHops(searchParams p) {
             if (!visitedFIT) {
                 v.push_back(fIT->getDestination());
                 flights.push_back(*fIT);
-                cout << "adding flight: " << *fIT << endl;
+                // cout << "adding flight: " << *fIT << endl;
                 q.push(fIT->getDestination());
             }
         }
@@ -152,7 +152,7 @@ list<Flight> TripAdvisor::fewestHops(searchParams p) {
 }
 
 list<Flight> TripAdvisor::shortestTrip(searchParams p) {
-    cout << "shortestTrip called" << endl;
+    // cout << "shortestTrip called" << endl;
     vector<City*> v;
     vector<list<Flight>> flights(cities.size());
     vector<pair<int, int>*> q(cities.size());
@@ -163,29 +163,29 @@ list<Flight> TripAdvisor::shortestTrip(searchParams p) {
         c[i] = *it;
         if (*it == p.departCity) {
             q[i]->second = 0;
-            cout << "setting origin dist to 0" << endl;
+            // cout << "setting origin dist to 0" << endl;
         }
         i++;
     }
-    cout << "initializied. q has " << i << " items"  << endl;
+    // cout << "initializied. q has " << i << " items"  << endl;
     for (int i = 0; i < q.size(); i++) {
-        cout << "\t<" << q[i]->first << " " << q[i]->second << ">" << endl;
+        // cout << "\t<" << q[i]->first << " " << q[i]->second << ">" << endl;
     }
     bool empty = false;
     while (!empty) {
-        cout << "looping" << endl;
+        // cout << "looping" << endl;
         pair<int, int> current  = extractMin(q, empty);
         int currentIdx = current.first;
         int currentDist = current.second;
         if (empty || c[currentIdx] == p.arriveCity) {
-            cout << "cleaning up" << endl;
+            // cout << "cleaning up" << endl;
             //cleanup
             for (int i = 0; i < q.size(); i++) {
                 if (q[i] != nullptr)
                     delete q[i];
             }
 		    list<Flight> l;
-		    cout << "returning shortestTrip" << endl;
+		    // cout << "returning shortestTrip" << endl;
             return empty ? l : flights[currentIdx];
         }
         list<Flight> neighbors = c[currentIdx]->getOutboundFlights();
@@ -220,31 +220,31 @@ list<Flight> TripAdvisor::shortestTrip(searchParams p) {
                 flights[neighborIdx] = temp;
             }
         }
-        cout << "end of loop" << endl;
+        // cout << "end of loop" << endl;
     }
 }
 
 
 pair<int, int> extractMin(vector<pair<int, int>*>& v, bool& empty) {
-    cout << "extract min called" << endl;
+    // cout << "extract min called" << endl;
     pair<int, int> min(-1, numeric_limits<int>::max());
     int minIdx = -1;
     for (int i = 0; i < v.size(); i++) {
         if (v[i] != nullptr && v[i]->second < min.second){
             min = *v[i];
             minIdx = i;
-            cout << "found smaller: <" << min.first << ' ' << min.second << '>' << endl;
+            // cout << "found smaller: <" << min.first << ' ' << min.second << '>' << endl;
         }
     }
-    cout << "smallest: <" << min.first << ' ' << min.second << '>' << endl;
+    // cout << "smallest: <" << min.first << ' ' << min.second << '>' << endl;
     if (minIdx == -1){
         empty = true;
     } else {
         delete v[minIdx];
         v[minIdx] = nullptr;
         if (v[minIdx] == nullptr)
-            cout << "deleted" << endl;
+            // cout << "deleted" << endl;
     }
-    cout << "exiting extract min. empty: " << empty  << endl;
+    // cout << "exiting extract min. empty: " << empty  << endl;
     return min;
 }
