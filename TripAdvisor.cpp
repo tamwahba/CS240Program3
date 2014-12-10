@@ -169,14 +169,16 @@ list<Flight> TripAdvisor::shortestTrip(searchParams p) {
         pair<int, int> current  = extractMin(q, empty);
         int currentIdx = current.first;
         int currentDist = current.second;
-        if (!empty && c[currentIdx] == p.arriveCity) {
+        if (empty || c[currentIdx] == p.arriveCity) {
             cout << "cleaning up" << endl;
             //cleanup
             for (int i = 0; i < q.size(); i++) {
                 if (q[i] != nullptr)
                     delete q[i];
             }
-            return flights[currentIdx];
+		    list<Flight> l;
+		    cout << "returning shortestTrip" << endl;
+            return empty ? l : flights[currentIdx];
         }
         list<Flight> neighbors = c[currentIdx]->getOutboundFlights();
         for (list<Flight>::iterator it = neighbors.begin();
@@ -212,8 +214,6 @@ list<Flight> TripAdvisor::shortestTrip(searchParams p) {
         }
         cout << "end of loop" << endl;
     }
-    list<Flight> l;
-    return l;
 }
 
 
