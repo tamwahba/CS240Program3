@@ -77,9 +77,23 @@ void TripAdvisor::printCitiesTo(ostream& out) {
 	}
 }
 
-list<Flight> TripAdvisor::getMeThere(searchParams) {
-    list<Flight> flights;
+list<Flight> TripAdvisor::getMeThere(searchParams p) {
+    list<Flight> flights, fls, flsBack;
     cout << "getMeThere called" << endl;
+    fls = shortestTrip(p);
+    if (sumDuration(fls)) {
+        cout << "forward trip valid" << endl;
+        City* temp = p.departCity;
+        p.departCity = p.arriveCity;
+        p.arriveCity = temp;
+        flsBack = shortestTrip(p);
+        //fls.splice(fls.end(), flsBack);
+        if (sumDuration(fls)) {
+            cout << "total trip valid" << endl;
+            return fls;
+        }
+    }
+    cout << "trip too long" << endl;
     return flights;
 }
 
@@ -155,7 +169,7 @@ list<Flight> TripAdvisor::shortestTrip(searchParams p) {
         pair<int, int> current  = extractMin(q, empty);
         int currentIdx = current.first;
         int currentDist = current.second;
-        if (c[currentIdx] == p.arriveCity) {
+        if (!empty && c[currentIdx] == p.arriveCity) {
             cout << "cleaning up" << endl;
             //cleanup
             for (int i = 0; i < q.size(); i++) {
@@ -198,6 +212,8 @@ list<Flight> TripAdvisor::shortestTrip(searchParams p) {
         }
         cout << "end of loop" << endl;
     }
+    list<Flight> l;
+    return l;
 }
 
 
