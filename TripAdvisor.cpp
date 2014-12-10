@@ -22,9 +22,9 @@ void TripAdvisor::addFlight(string flightStr) {
 	ss >> cost;
     City* origin = nullptr;
 	City* destination = nullptr;
-    if (departT == "pm")
+    if (departT == "pm" && departHour < 12)
         departHour += 12;
-    if (arriveT == "pm")
+    if (arriveT == "pm" && arriveHour < 12)
         arriveHour += 12;
     // find departure and origin city in cities
     if (!cities.empty()) {
@@ -169,10 +169,10 @@ list<Flight> TripAdvisor::shortestTrip(searchParams p) {
                 it != neighbors.end(); it++) {
             int layover = 0;
             if (!flights[currentIdx].empty()) {
-                if (flights[currentIdx].back().getDeparture() < it->getArrival()) {
+                if (flights[currentIdx].back().getArrival() > it->getDeparture()) {
                     layover += (24 * 60);
                 }
-                layover += (flights[currentIdx].back().getDeparture() - it->getArrival()).getAsMinutes();
+                layover += (it->getDeparture() - flights[currentIdx].back().getArrival()).getAsMinutes();
             }
             int alt = currentDist + it->getDuration().getAsMinutes() + layover;
             int neighborIdx = -1;
@@ -182,7 +182,7 @@ list<Flight> TripAdvisor::shortestTrip(searchParams p) {
                     break;
                 }
             }
-            int neighborqIdx;
+            int neighborqIdx = -1;
             for (int i = 0; i < q.size(); i++) {
                 if (neighborIdx != -1 && q[i] != nullptr && q[i]->first == neighborIdx) {
                     neighborqIdx = i;
