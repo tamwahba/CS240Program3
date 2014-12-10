@@ -93,7 +93,9 @@ list<Flight> TripAdvisor::getMeThere(searchParams p) {
         p.departCity = p.arriveCity;
         p.arriveCity = temp;
         flsBack = shortestTrip(p);
-        //fls.splice(fls.end(), flsBack);
+        if(sumDuration(flsBack))
+            cout << "backwards trip valid" << endl;
+        fls.splice(fls.end(), flsBack);
         if (sumDuration(fls)) {
             cout << "total trip valid" << endl;
             return fls;
