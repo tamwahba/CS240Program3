@@ -34,4 +34,6 @@ class Flight
 	
 };
 
+Time sumDuration(list<Flight>&);
+
 #endif
