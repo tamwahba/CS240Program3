@@ -126,7 +126,7 @@ list<Flight> TripAdvisor::fewestHops(searchParams p) {
         flights.clear();
     }
     list<Flight> finalF;
-    for (list<Flight>::iterator it = flights.end(); it != flights.begin(); it--) {
+    for (list<Flight>::reverse_iterator it = flights.rbegin(); it != flights.rend(); it++) {
     	if (it->getDestination() == o) {
     		finalF.push_front(*it);
     		o = it->getOrigin();
