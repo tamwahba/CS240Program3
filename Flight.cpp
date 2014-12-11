@@ -48,7 +48,7 @@ ostream& operator<<(ostream& out, const Flight& flight) {
 	return out;
 }
 
-Time sumDuration(list<Flight>& fls) {
+bool sumDuration(list<Flight>& fls) {
     // cout << "in sumDuration" << endl;
     int t = 0;
     for (list<Flight>::iterator it = fls.begin(); it != fls.end(); it++) {
@@ -61,7 +61,8 @@ Time sumDuration(list<Flight>& fls) {
         }
         t += it->getDuration().getAsMinutes() + layover;
     }
+	return (t == -1 ? false : true);
     // cout << "returning sumDuration" << endl;
-    return Time(t);
+    //return Time(t);
 }
 

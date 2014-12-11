@@ -82,6 +82,12 @@ void TripAdvisor::printCitiesTo(ostream& out) {
         }
 	}
 }
+void TripAdvisor::printFlights (list <Flight> f) {
+	for (list<Flight>::iterator fIT = f.begin(); fIT != f.end(); fIT++) {
+		cout << *fIT << endl;
+	}
+
+}
 
 list<Flight> TripAdvisor::getMeThere(searchParams p) {
     list<Flight> flights, fls, flsBack;
@@ -93,15 +99,35 @@ list<Flight> TripAdvisor::getMeThere(searchParams p) {
         p.departCity = p.arriveCity;
         p.arriveCity = temp;
         flsBack = shortestTrip(p);
-        if(sumDuration(flsBack))
+		
+		// Unsure if I should return list of flights if flight cannot return in SAME DAY
+	/*
+		if(!sumDuration(flsBack) ) {
+			cout << "Return trip unavailable" << endl;
+			if (sumDuration(fls) ) {
+				cout << "But it is possible to fly outbound" << endl;
+				for (list<Flight>::iterator fIT = fls.begin(); fIT != fls.end(); fIT++) {
+					cout << *fIT << endl; }
+			}
+		}else if (!sumDuration(fls)) {cout << "Outbound trip unavilable" << endl;
+		}
+		else if (sumDuration(flsBack) && sumDuration(fls) ) {
+			for (list<Flight>::iterator fIT = fls.begin(); fIT != fls.end(); fIT++) {
+				cout << *fIT << endl; }
+			cout<< "Return trip: " <<endl;
+			for (list<Flight>::iterator fIT = flsBack.begin(); fIT != flsBack.end(); fIT++) {
+				cout << *fIT << endl; }
+		}
+	 */
+		
             // cout << "backwards trip valid" << endl;
-        fls.splice(fls.end(), flsBack);
+		fls.splice(fls.end(), flsBack);
         if (sumDuration(fls)) {
             // cout << "total trip valid" << endl;
             return fls;
         }
     }
-    // cout << "trip too long" << endl;
+     cout << "trip too long" << endl;
     return flights;
 }
 

@@ -41,6 +41,7 @@ class TripAdvisor {
 		list<Flight> shortestTrip(searchParams);
 		
 		void printCitiesTo(ostream&);
+		void printFlights( list <Flight> f);
 
 	private:
 		list<City*> cities;

@@ -50,10 +50,13 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
         getline(cin, arriveName);
         // cout << "you entered: " << arriveName << endl;
         returnCity = t.getCity(arriveName);
-        if (returnCity != nullptr) {
+		if (arriveName == departName) {
+			cout << "Must depart and arrive at two different cities " << endl;
+			break;
+		}else if (returnCity != nullptr) {
             p.arriveCity = returnCity;
             break;
-        } else {
+		}else {
             if (cin.eof())
                 break;
             cout << "City not in schedule. Please try again." << endl;
@@ -164,6 +167,7 @@ int main(int argc, char const *argv[])
 				// cout << "selected J" << endl;
 				if (getConstraints(t, p))
                     itinerary = t.getMeThere(p);
+					//t.getMeThere(p);
 			} else if (c == "F" || c == "f") {
 				// cout << "selected F" << endl;
 				if(getConstraints(t, p)) {
@@ -196,12 +200,35 @@ int main(int argc, char const *argv[])
 				cout << "Error please enter J, F,C, or S." << endl;
 			}
             cin.clear();
+			if (!itinerary.empty() ) {
             cout << "Your itinerary is:" << endl;
-            for (list<Flight>::iterator fIT = itinerary.begin(); fIT != itinerary.end(); fIT++)
-                cout << *fIT << endl;
-            for (list<Flight>::iterator fIT = itineraryB.begin(); fIT != itineraryB.end(); fIT++)
-                cout << *fIT << endl;
-            //cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			/*
+			if (itinerary.empty() ) {
+				cout << "No flights available " << endl;
+				if (!itineraryB.empty() ) {
+					cout << "We did find return flights available, please try again with new outbound flight information " << endl;
+					for (list<Flight>::iterator fIT = itineraryB.begin(); fIT != itineraryB.end(); fIT++)
+						cout << *fIT << endl;
+				}
+			}else if (itineraryB.empty() ) {
+				if (!itinerary.empty () ) {
+					cout << "We did find outbound flights that work, please try again with different return information. " << endl;
+					for (list<Flight>::iterator fIT = itinerary.begin(); fIT != itinerary.end(); fIT++)
+						cout << *fIT << endl;
+				}
+				cout << "No return flights available " <endl;
+			}*/
+				//else {
+			for (list<Flight>::iterator fIT = itinerary.begin(); fIT != itinerary.end(); fIT++)
+					cout << *fIT << endl;
+			if (!itineraryB.empty() ) {
+				cout << "Return flights: " << endl;
+				
+				for (list<Flight>::iterator fIT = itineraryB.begin(); fIT != itineraryB.end(); fIT++)
+					cout << *fIT << endl;
+				}
+				//cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 		}
 	} else {
 		cout << "Cannot run program without DDFS file as argument." << endl;
