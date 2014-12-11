@@ -100,7 +100,7 @@ list<Flight> TripAdvisor::getMeThere(searchParams p) {
         p.arriveCity = temp;
         flsBack = shortestTrip(p);
 		
-		// Unsure if I should return list of flights if flight cannot return in SAME DAY
+		// Returns flights only if it can go there and back in SAME DAY
 	/*
 		if(!sumDuration(flsBack) ) {
 			cout << "Return trip unavailable" << endl;

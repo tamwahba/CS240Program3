@@ -50,10 +50,13 @@ bool getConstraints(TripAdvisor& t, searchParams& p) {
         getline(cin, arriveName);
         // cout << "you entered: " << arriveName << endl;
         returnCity = t.getCity(arriveName);
-		if (arriveName == departName) {
+		/*if (arriveName == departName) {
 			cout << "Must depart and arrive at two different cities " << endl;
 			break;
-		}else if (returnCity != nullptr) {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		 */
+		if (returnCity != nullptr) {
             p.arriveCity = returnCity;
             break;
 		}else {
